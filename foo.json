@@ -1,0 +1,16 @@
+{
+  "0000": { "_id": "0000", "name": "C", "parent" : null, "type" : "directory" },
+  "0001": { "_id": "0001", "name": "JSOS", "parent" : "0000", "type" : "directory" },
+  "0002": { "_id": "0002", "name": "System32", "parent" : "0001", "type" : "directory" },
+  "000A": { "_id": "000A", "name": "Users", "parent" : "0000", "type" : "directory" },
+  "000B": { "_id": "000B", "name": "Default", "parent" : "000A", "type" : "directory"},
+  "000C": { "_id": "000C", "name": "Public", "parent" : "000A", "type" : "directory"},
+  "000D": { "_id": "000D", "name": "Jasper", "parent" : "000A", "type" : "directory"},
+  "000D1": { "_id": "000D1", "name": "Documents", "parent" : "000D", "type" : "directory"},
+  "000D2": { "_id": "000D2", "name": "Pictures", "parent" : "000D", "type" : "directory"},
+  "000D3": { "_id": "000D3", "name": "Music", "parent" : "000D", "type" : "directory"},
+  "000D4": { "_id": "000D4", "name": "Downloads", "parent" : "000D", "type" : "directory"},
+  "0003": { "_id": "0003", "name": "foo", "parent" : "0002", "type" : "file", "ext" : "txt", "content" : "Hello, world! This is a test..." },
+  "000X": { "_id": "000X", "name": "program1", "parent": "0000", "type": "exec/base64", "ext": "exe", "content": "bGV0IHcgPSBuZXcgV2luZG93KCk7dy5zZXRUaXRsZSgnRGlyZWN0b3J5IFRyZWUnKTt3LnNldFNpemUoMzIwLCAyNDApO3cuc3RhcnQoKTskLmdldCgnZm9sZGVyLXRyZWUnLCBmdW5jdGlvbih0cmVlKSB7bGV0IHkgPSAwO2Z1bmN0aW9uIGNyZWF0ZVN1YkRpcmVjdG9yaWVzKGRpciwgeCkge3cuYWRkQ29tcG9uZW50KG5ldyBXTGFiZWwoZGlyLm5hbWUgKyAnLycpLnNldFBvc2l0aW9uKHgsIHkpKTt4ICs9IDg7eSArPSAxNjtmb3IobGV0IHN1YmRpciBvZiBkaXIuZGlyZWN0b3JpZXMpIHtjcmVhdGVTdWJEaXJlY3RvcmllcyhzdWJkaXIsIHgpO319Y3JlYXRlU3ViRGlyZWN0b3JpZXModHJlZSwgMCk7dy5pbnZhbGlkYXRlKCk7fSk7"},
+  "000Y": { "_id": "000Y", "name": "program1", "parent": "0000", "type": "exec/plain", "ext": "exe", "content": "let w = new Window(); w.setTitle('Test'); w.setSize(300, 200); w.addComponent(new WLabel('A')); w.start();"}
+}

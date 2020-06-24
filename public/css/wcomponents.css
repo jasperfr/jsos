@@ -1,0 +1,8 @@
+.wlabel {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    height: 16px;
+    box-sizing: border-box;
+    width: 200px;
+}

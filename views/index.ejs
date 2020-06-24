@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <%- include('partials/header.ejs') %>
+    <body>
+        <script>
+            $(function() {
+                // try executing from the drive!
+                $.get('executable-test', { id: '000Y' }, function(file) {
+                    eval(file);
+                });
+
+                let w = new Window();
+                w.setTitle('About JavaScript Virtual OS')
+                let el = w.start();
+                el.css('width', '522px');
+                let content = el.find('.content');
+                content.css('background-color', 'white');
+                content
+                    .css('display', 'flex').css('padding', '8px').css('flex-direction', 'row').css('justify-content','space-between').css('height', '64px')
+                    .append($('<img src="/img/logo.png" width="64" height="64">'))
+                    .append($('<p style="padding:0;margin:0;font-weight:600;font-size:16px;padding-left:8px;padding-right:8px;">JavaScript Virtual Operating System<br>Version 3.1.0<br>Created by jasperfr <a href="https://github.com/jasperfr/">(github)</a></p>'))
+                    .append($('<button>OK</button>'))
+            });
+        </script>
+    </body>
+</html>
