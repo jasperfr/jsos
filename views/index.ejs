@@ -2,25 +2,42 @@
 <html>
     <%- include('partials/header.ejs') %>
     <body>
+        <!--
+            Window creation example.
+            TODO: Move this to the drive JSON file...
+         -->
         <script>
-            $(function() {
-                // try executing from the drive!
-                $.get('executable-test', { id: '000Y' }, function(file) {
-                    eval(file);
-                });
+        // You can create a new window with the new JSFrame() function.
+        let wnd = new JSFrame();
+        wnd.setSize(640, 480);
+        wnd.setVar('clicks', 0)
+        wnd.css('background-color', 'white');
 
-                let w = new Window();
-                w.setTitle('About JavaScript Virtual OS')
-                let el = w.start();
-                el.css('width', '522px');
-                let content = el.find('.content');
-                content.css('background-color', 'white');
-                content
-                    .css('display', 'flex').css('padding', '8px').css('flex-direction', 'row').css('justify-content','space-between').css('height', '64px')
-                    .append($('<img src="/img/logo.png" width="64" height="64">'))
-                    .append($('<p style="padding:0;margin:0;font-weight:600;font-size:16px;padding-left:8px;padding-right:8px;">JavaScript Virtual Operating System<br>Version 3.1.0<br>Created by jasperfr <a href="https://github.com/jasperfr/">(github)</a></p>'))
-                    .append($('<button>OK</button>'))
-            });
+        // Components can be added without assigning a variable...
+        wnd.add(new JSLabel()
+            .setText('This is a test!')
+            .setPosition(10, 10)
+        );
+
+        // ...Or with a variable, to reference it in other components.
+        let clickedLabel = new JSLabel()
+            .setText('You clicked the button 0 times.')
+            .setPosition(10, 100);
+        wnd.add(clickedLabel);
+
+        // Keep track of the function chaining! It's very useful.
+        wnd.add(new JSButton()
+            .setPosition(10, 50)
+            .setSize(200, 32)
+            .setText('Click me!')
+            .onClick(function() {
+                let clicks = wnd.getVar('clicks') + 1;
+                wnd.setVar('clicks', clicks);
+                clickedLabel.setText(`You clicked the button ${clicks} times.`);
+            })
+        );
+
+        wnd.start();
         </script>
     </body>
 </html>

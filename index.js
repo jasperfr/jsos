@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const app = express()
 const port = 3000
-const store = require('data-store')({ path: process.cwd() + '/foo.json'})
+const store = require('data-store')({ path: process.cwd() + '/drive.json'})
 
 function getDirectoryTree(parentID) {
     let directory = store.get(parentID);
@@ -48,11 +48,7 @@ app.get('/executable-test', (req, res) => {
 
 app.get('/', (req, res) => {
     res.render('index')
-})
-
-app.get('/term', (req, res) => {
-    res.render('terminal')
-})
+});
 
 app.listen(port, () => {
     console.log('App listening on port ' + port)
