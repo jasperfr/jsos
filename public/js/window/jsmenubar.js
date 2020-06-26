@@ -20,12 +20,32 @@ class JSMenuBar {
 
 class JSMenu {
   constructor(name) {
-    this.$element = $(`<button class="jsmenu-button">${name}</button>`);
-    this.$menu = $('<ul class="jsmenu-menu"></ul>');
+    this.$element = $(`
+    <div class="jsmenu">
+      <p>${name}</p>
+      <ul class="jsmenu-list"></ul>
+    </div>`);
+    return this;
+  }
+
+  add(text, func) {
+    let $menuList = this.$element.find('ul');
+    let $li = $(`<li>${text}</li>`)
+      .click(func)
+      .click(() => $menuList.hide())
+    $menuList.append($li);
     return this;
   }
 
   start() {
+    let $menuButton = this.$element.find('p');
+    let $menuList = this.$element.find('ul');
+
+    $menuList.hide();
+    $menuButton.on('click', function() {
+      $menuList.toggle();
+    });
+
     return this.$element;
   }
 }

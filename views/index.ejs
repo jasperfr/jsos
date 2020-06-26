@@ -7,37 +7,32 @@
             TODO: Move this to the drive JSON file...
          -->
         <script>
-        // You can create a new window with the new JSFrame() function.
-        let wnd = new JSFrame();
-        wnd.setSize(640, 480);
-        wnd.setVar('clicks', 0)
-        wnd.css('background-color', 'white');
 
-        // Components can be added without assigning a variable...
-        wnd.add(new JSLabel()
-            .setText('This is a test!')
-            .setPosition(10, 10)
-        );
+            let editor = new JSFrame();
+            let layout = new TableLayout();
+            let textarea = new JSTextArea();
+            let startButton = new JSButton();
+            let menuBar = new JSMenuBar();
 
-        // ...Or with a variable, to reference it in other components.
-        let clickedLabel = new JSLabel()
-            .setText('You clicked the button 0 times.')
-            .setPosition(10, 100);
-        wnd.add(clickedLabel);
+            editor.setMenuBar(menuBar);
+            menuBar.add(
+                new JSMenu('File')
+                    .add('New', function() { textarea.text = ""; })
+            );
 
-        // Keep track of the function chaining! It's very useful.
-        wnd.add(new JSButton()
-            .setPosition(10, 50)
-            .setSize(200, 32)
-            .setText('Click me!')
-            .onClick(function() {
-                let clicks = wnd.getVar('clicks') + 1;
-                wnd.setVar('clicks', clicks);
-                clickedLabel.setText(`You clicked the button ${clicks} times.`);
-            })
-        );
+            menuBar.add(new JSMenu('App')
+                .add('Run', function() { eval(textarea.text); })
+            );
 
-        wnd.start();
+            editor.title = "JSForm Editor 0.1"
+            editor.width = 400;
+            editor.height = 300;
+            editor.add(layout);
+            layout.setTableDimensions(0, 0, 1, 1);
+            layout.add(textarea);
+
+            editor.initialize();
+
         </script>
     </body>
 </html>
