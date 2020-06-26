@@ -58,17 +58,21 @@ app.post('/save-file', (req, res) => {
 
     // Filename check
     if(filename == "" || filename == undefined || !filename.match(/^[a-zA-Z\_\-]+$/g)) {
-        return res.status(406).send('Not a valid file name');
+        return res.status(406).send('Not a valid file name.');
     }
 
     // Content check - must be a valid BASE64 string
     if(content == undefined || !content.match(/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/g)) {
-        return res.status(406).send('Content is not a valid BASE64 encoded string');
+        return res.status(406).send('Content is not a valid BASE64 encoded string.');
     }
 
     // If the file exists, overwrite it...
     let file = store.first(file => file.name == filename);
     if(file != undefined) {
+        if(file.level == 'kernel') {
+            return res.status(406).send('Kernel files can not be modified.');
+        };
+
         let newFile = {
             '_id': file._id,
             'name': file.name,
