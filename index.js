@@ -49,7 +49,7 @@ app.get('/open-file', (req, res) => {
         return res.status(404).send('File does not exist.');
     }
 
-    res.status(200).send(file.content);
+    res.status(200).send(file);
 });
 
 app.post('/save-file', (req, res) => {
@@ -72,6 +72,7 @@ app.post('/save-file', (req, res) => {
         let newFile = {
             '_id': file._id,
             'name': file.name,
+            'level': file.level,
             'content': content
         }
         store.set(file._id, newFile);
@@ -80,7 +81,7 @@ app.post('/save-file', (req, res) => {
 
     // ...Otherwise, create a new object.
     let id = md5(Date.now().toString());
-    store.set(id, { '_id': id, 'name': filename, 'content': content });
+    store.set(id, { '_id': id, 'name': filename, 'level': 'user', 'content': content });
     return res.status(200);
 });
 

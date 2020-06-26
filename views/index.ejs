@@ -2,99 +2,11 @@
 <html>
     <%- include('partials/header.ejs') %>
     <body>
-        <!--
-            Window creation example.
-            TODO: Move this to the drive JSON file...
-         -->
         <script>
-
-            let editor = new JSFrame();
-            let layout = new TableLayout();
-            let textarea = new JSTextArea();
-            let startButton = new JSButton();
-            let menuBar = new JSMenuBar();
-
-            editor.setMenuBar(menuBar);
-            menuBar.add(
-                new JSMenu('File')
-                    .add('New', function() { 
-                        if(confirm('Are you sure you want to start a new application?')) {
-                            textarea.text = "";
-                        }
-                    })
-                    .add('Open', function() { 
-                        let text = prompt('[EXPERIMENTAL] Open with a file name...')
-                        if(text == "") return;
-
-                        // client side security check
-                        if(!text.match(/^[a-zA-Z\_\-]+$/g)) {
-                            alert(`"${text}" is not a valid file name!`);
-                            return;
-                        }
-
-                        $.ajax({
-                            type: 'GET',
-                            url: 'open-file',
-                            data: { 'filename' : text },
-                            success: function(res) {
-                                console.log(res);
-                                if(res == "") textarea.text = "";
-                                else textarea.text = atob(res);
-                            },
-                            statusCode: {
-                                404: function(err) {
-                                    alert(`File "${text}" does not exist.`);
-                                },
-                                418: function(err) {
-                                    alert('I like starmix.')
-                                    console.log(err.responseText);
-                                }
-                            }
-                        });
-                    })
-                    .add('Save (beta)', function() {
-                        let text = prompt('[EXPERIMENTAL] Set the file name');
-
-                        if(text == "") return;
-                        if(!text.match(/^[a-zA-Z\_\-]+$/g)) {
-                            alert(`"${text}" is not a valid file name!`);
-                            return;
-                        }
-                        let contentData = btoa(textarea.text);
-                        console.log(contentData);
-
-                        $.ajax({
-                            type: 'POST',
-                            url: 'save-file',
-                            data: { 'filename' : text, 'content': contentData },
-                            success: function(res) {
-                                console.log(res);
-                                if(res == "") textarea.text = "";
-                                else textarea.text = atob(res);
-                            },
-                            statusCode: {
-                                406: function(err) {
-                                    console.log(err);
-                                } 
-                            }
-                        });
-
-                    })
-            );
-
-            menuBar.add(new JSMenu('App')
-                .add('Run', function() { eval(textarea.text); })
-            );
-
-            editor.title = "JSForm Editor 0.1"
-            editor.width = 400;
-            editor.height = 300;
-            editor.add(layout);
-            layout.setTableDimensions(0, 0, 1, 1);
-            layout.add(textarea);
-
-            editor.initialize();
-
+            // Launch the editor application.
+            $.get('open-file', { 'filename' : 'editor' }, function(data) {
+                eval(atob(data.content));
+            });
         </script>
     </body>
 </html>
