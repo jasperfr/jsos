@@ -1,0 +1,98 @@
+
+#taskbar {
+    position: fixed;
+    z-index: 65535;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 26px;
+    background-color: #C0C0C0;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    border-top: 1px solid white;
+    outline: 1px solid #C0C0C0;
+}
+
+  
+#taskbar-menu-list .taskbar-wrapper,
+#taskbar-start-button .taskbar-wrapper,
+#taskbar-system-tray .taskbar-wrapper {
+    margin:2px 4px 2px 0;
+    display: block;
+    width: 160px;
+    height: 26px;
+    position: relative;
+}
+#taskbar-start-button .taskbar-wrapper,
+#taskbar-system-tray .taskbar-wrapper {
+    width: 54px;
+}
+
+#taskbar-system-tray .taskbar-wrapper {
+    margin-right: 3px !important;
+}
+
+#taskbar-menu-list {
+    display: flex;
+    flex: 1 0 auto;
+}
+
+#taskbar-menu-list .taskbar-wrapper .taskbar-item,
+#taskbar-start-button .taskbar-wrapper .taskbar-item {
+    display: block;
+    margin: auto;
+    user-select: none;
+    text-align: center;
+    box-sizing: border-box;
+    line-height: 20px;
+    border: 1px solid;
+    border-color: #DFDFDF #828282 #828282 #DFDFDF;
+    position: relative;
+}  
+
+#taskbar-system-tray .taskbar-wrapper .taskbar-item {
+    display: block;
+    height: 20px;
+    border: 1px solid;
+    margin: auto;
+    line-height: 20px;
+    border-color:  #828282 #DFDFDF #DFDFDF #828282;
+    padding-right: 3px;
+}
+
+#taskbar-menu-list .taskbar-wrapper .taskbar-item::after,
+#taskbar-start-button .taskbar-wrapper .taskbar-item::after {
+    content: "";
+    position: absolute;
+    left: -2px; top: -2px; right: -2px; bottom: -2px;
+    border: 1px solid;
+    border-color: #FFFFFF #000000 #000000 #FFFFFF;
+    pointer-events: none;
+}
+
+#taskbar-menu-list .taskbar-wrapper .taskbar-item.toggled,
+#taskbar-start-button .taskbar-wrapper .taskbar-item.toggled {
+    background-color: #E0E0E0;
+}
+
+#taskbar-menu-list .taskbar-wrapper:hover,
+#taskbar-start-button .taskbar-wrapper:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#taskbar-system-tray .taskbar-wrapper {
+    text-align: right;
+}
+
+#taskbar-menu-list .taskbar-wrapper .taskbar-item {
+    text-align: left;
+    padding-left: 16px;
+}
+
+#taskbar-menu-list .taskbar-wrapper.toggled .taskbar-item {
+    border-color: #828282 #DFDFDF #DFDFDF #828282;
+}
+#taskbar-menu-list .taskbar-wrapper.toggled .taskbar-item::after {
+    border-color: #000000 #FFFFFF #FFFFFF #000000;
+}

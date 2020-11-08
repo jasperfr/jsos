@@ -1,5 +1,6 @@
 class JSFrame {
-  constructor(id) {
+  constructor(icon, id) {
+    this.icon = icon || "exe";
     this._id = id || Date.now().toString();
     this._type = 'JSFrame'
     this.globals = {};
@@ -29,8 +30,9 @@ class JSFrame {
    this.$window = $(`
    <div class="window" style="width:${this.widthValue}px;">
        <div class="titlebar">
-           <p class="button minimize"></p>
+           <img src="img/types/16/${this.icon}.png">
            <h1>${this.titleValue}</h1>
+           <p class="button minimize"></p>
            <p class="button expand"></p>
            <p class="button close"></p>
        </div>
@@ -38,6 +40,7 @@ class JSFrame {
        </div>
    </div>
    `);
+    this.taskbar = undefined;
     this.jsmenubar = undefined;
     return this;
   }
@@ -114,6 +117,8 @@ class JSFrame {
 
   initialize() {
     let self = this;
+    this.taskbar = new JSTaskbarItem(this);
+    this.taskbar.start();
     $(function() {
       $(document.body).append(self.start());
     });
@@ -149,13 +154,14 @@ class JSFrame {
     // Configure the minimize button.
     let self = this;
     this.$window.find('.minimize').click(function() {
-        self.$window.toggleClass('hidden');
-        self.$window.removeClass('full-screen');
+      self.$window.hide();
+      self.taskbar.$element.toggleClass('toggled');
     });
 
     // (TODO) Configure the close button.
     this.$window.find('.close').click(function() {
       self.$window.remove();
+      self.taskbar.close();
     });
 
     // Configure the expand button.

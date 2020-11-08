@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 const md5 = require('md5');
 const store = require('data-store')({ path: process.cwd() + '/drive.json'});
+const store2 = require('data-store')({ path: process.cwd() + '/drive/C.json' });
 
 /* =====================================
  * data-store function hacks
@@ -25,7 +26,67 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
+function fail() {
+    return res.status(403).send('Invalid.');
+}
+
 /* Drive API settings */
+app.get('/open-directory', (req, res) => {
+    let pathname = req.query.directoryTree; // C:/Desktop/
+    // trim exit /
+    if(pathname.endsWith('/')) {
+        pathname = pathname.slice(0, -1);
+    }
+    // split query
+    let directoryTree = pathname.split('/');
+    let obj = store2.data;
+
+    // TODO might want to debug this function later...
+    // Otherwise, it works perfectly.
+    for(let i = 0; i < directoryTree.length; i++) {
+        let directory = obj[directoryTree[i]];
+        if(directory === undefined || directory.type !== 'folder') {
+            return res.status(404).sendMessage(`${directory} is not a directory!`);
+        }
+        obj = directory.content;
+    }
+
+    return res.status(200).send(obj);
+});
+
+app.get('/get-file', (req, res) => {
+    let filename = req.query.path;
+    if(!filename) return res.status(404).send('');
+
+    // might want to convert this to a function...
+    // (and debug it, you idiot).
+    if(!filename.startsWith('My Computer/')) filename = "My Computer/" + filename;
+    if(filename.endsWith('/')) filename = filename.slice(0, -1);
+    let directoryTree = filename.split('/');
+    let obj = store2.data;
+
+    for(let i = 0; i < directoryTree.length - 1; i++) {
+        let directory = obj[directoryTree[i]];
+        obj = directory.content;
+    }
+
+    let name = directoryTree.slice(-1)[0];
+    let file = obj[name];
+    file['name'] = name;
+
+    return res.status(200).send(file);
+});
+
+app.get('/get-mime-ext', (req, res) => {
+    let type = req.query.type;
+    if (!type) return fail();
+
+    let mimes = store2.data['$MIMES'];
+    return res.status(200).send(mimes[type]);
+});
+
+
+
 app.get('/open-file', (req, res) => {
     
     let filename = req.query.filename;
@@ -50,6 +111,10 @@ app.get('/open-file', (req, res) => {
     }
 
     res.status(200).send(file);
+});
+
+app.get('/glob', (req, res) => {
+    res.status(200).send(store.data);
 });
 
 app.post('/save-file', (req, res) => {

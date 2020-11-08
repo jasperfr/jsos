@@ -9,6 +9,17 @@ class JSPanel extends Component {
     this.components.push(component);
   }
 
+  empty() {
+    this.components = [];
+  }
+
+  refresh() {
+    this.$element.empty();
+    for(let component of this.components) {
+      this.$element.append(component.start());
+    }
+  }
+
   start() {
     for(let component of this.components) {
       this.$element.append(component.start());

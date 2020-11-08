@@ -1,11 +1,13 @@
 class JSMenuBar {
-  constructor() {
+  constructor(window) {
+    this.windowPtr = window;
     this.$element = $('<div class="jsmenubar">');
     this.menuItems = [];
     return this;
   }
 
   add(component) {
+    component.menubarPtr = this;
     this.menuItems.push(component);
     return this;
   }
@@ -20,6 +22,7 @@ class JSMenuBar {
 
 class JSMenu {
   constructor(name) {
+    this.menubarPtr = null;
     this.$element = $(`
     <div class="jsmenu">
       <p>${name}</p>
@@ -28,9 +31,9 @@ class JSMenu {
     return this;
   }
 
-  add(text, func) {
+  add(text, func, shortcut) {
     let $menuList = this.$element.find('ul');
-    let $li = $(`<li>${text}</li>`)
+    let $li = $(`<li>${text}<span class="shortcut">${shortcut}</span></li>`)
       .click(func)
       .click(() => $menuList.hide())
     $menuList.append($li);
@@ -43,7 +46,8 @@ class JSMenu {
 
     $menuList.hide();
     $menuButton.on('click', function() {
-      $menuList.toggle();
+      if($menuList.css('display') == 'none') $menuList.fadeIn(150);
+      else $menuList.hide();
     });
 
     return this.$element;
