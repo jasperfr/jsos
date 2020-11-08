@@ -3,8 +3,8 @@ class JSIcon extends Component {
     constructor(id, name, type, icon, path) {
         super(id, 'JSIcon', $(`
         <div class="desktop-icon js-icon">
-            <img src="img/types/${icon ? icon : type}.png">
-            <img src="img/types/${type == 'shortcut' ? 'shortcut' : 'none'}.png" style="position:absolute;">
+            <img src="img/types/32/${icon ? icon : type}.png">
+            <img src="img/types/32/${type == 'shortcut' ? 'shortcut' : 'none'}.png" style="position:absolute;">
             <span>${name}</span>
         </div>`));
         this.name = name;

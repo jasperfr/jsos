@@ -108,19 +108,19 @@
 /* Titlebar buttons */
 
 .minimize {
-    background-image: url('/img/minimize.png');
+    background-image: url('/img/gui/minimize.png');
     background-position: center center;
     background-repeat: no-repeat;
 }
 
 .expand {
-    background-image: url('/img/expand.png');
+    background-image: url('/img//gui/expand.png');
     background-position: center center;
     background-repeat: no-repeat;
 }
 
 .close {
-    background-image: url('/img/close.png');
+    background-image: url('/img//gui/close.png');
     background-position: center center;
     background-repeat: no-repeat;
 }

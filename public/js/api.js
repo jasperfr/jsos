@@ -75,8 +75,8 @@ class Icon {
         this.shortcut = type == 'shortcut';
         this.$element = $(`
             <div class="desktop-icon">
-                <img src="img/types/${this.icon ? icon : type}.png">
-                <img src="img/types/${this.shortcut ? 'shortcut' : 'none'}.png" style="position:absolute;">
+                <img src="img/types/32/${this.icon ? icon : type}.png">
+                <img src="img/types/32/${this.shortcut ? 'shortcut' : 'none'}.png" style="position:absolute;">
                 <span>${name}</span>
             </div>
         `).draggable();
