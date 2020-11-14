@@ -15,7 +15,7 @@ function reload(done) {
 function images() {
   return gulp
     .src('src/**/*.png')
-    .pipe(gulp.dest('./app'));
+    .pipe(gulp.dest('./dist'));
 }
 
 function css() {
@@ -23,7 +23,7 @@ function css() {
     .src('src/**/*.scss')
     .pipe(sass())
     .pipe(concat('style.css'))
-    .pipe(gulp.dest('app'));
+    .pipe(gulp.dest('./dist'));
 }
 
 function scripts() {
@@ -32,7 +32,7 @@ function scripts() {
     .pipe(tsProject())
     .js
     .pipe(concat('app.js'))
-    .pipe(gulp.dest('app'));
+    .pipe(gulp.dest('./dist'));
 };
 
 function build(done) {
@@ -43,7 +43,7 @@ function build(done) {
 function watch() {
   browsersync.init({
     server: {
-      baseDir: './app'
+      baseDir: './dist'
     },
     port: 3000
   });
