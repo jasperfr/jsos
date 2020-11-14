@@ -23,9 +23,28 @@ function exec(file) {
 // using this file's content as argument???
 
 // only used for starting executables (.exes).
-function startApplication(path) {
+function execute(codeText) {
+    let code = `try {
+        ${codeText}
+    } catch(err) {
+      Exception.raise(err.stack);   
+    }`;
+    try {
+        eval(code);
+    } catch(err) { // for syntax errors
+        Exception.raise(err.stack);  
+    }
+}
+
+function startApplication(path, args) {
     $.get('get-file', { 'path' : path }).then(file => {
-        eval(atob(file.content));
+        let code = `try {
+            const args=["${args}"];
+            ${atob(file.content)}
+        } catch(err) {
+          Exception.raise(err);   
+        }`;
+        eval(code);
     })
 }
 

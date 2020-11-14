@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JSOS 97</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div id="desktop"></div>
+    <div id="taskbar">
+            <div id="taskbar-start-button">
+                <div class="taskbar-wrapper" style="width: 54px; margin-left:2px;">
+                    <div id="start" class="taskbar-item">
+                        <img src="img/gui/jstart.png" style="transform:translateY(2px);" /> Start
+                    </div>
+                </div>
+            </div>
+            <div id="taskbar-menu-list">
+
+            </div>
+            <div id="taskbar-system-tray">
+                <div class="taskbar-wrapper">
+                    <div class="taskbar-item">
+                        <span id="system-time"></span>
+                        <script>
+                            s=()=>$('#system-time').text(new Date().toTimeString().split(' ')[0]);s();
+                            setInterval(s, 1000);
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        var frame = new XFrame();
+        frame.start();    
+    </script>
+</body>
+</html>

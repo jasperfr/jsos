@@ -1,0 +1,157 @@
+div.xframe {
+  position: absolute !important;
+  border: 1px solid;
+  border-color:  #FFFFFF#828282 #828282 #FFFFFF;
+  background-color: #C3C3C3;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  z-index: 0;
+
+  &.full-screen {
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  &.focused {
+    z-index: 1;
+
+    div.titlebar {
+      background-color: #000082;
+      background-image: linear-gradient(to right, #000082, #0082C2);
+
+      h1 {
+        color: white;
+      }
+    }
+  }
+
+  &.hidden {
+    width: 200px !important;
+    height: unset !important;
+
+    .titlebar {
+      border-bottom: none !important;
+    }
+    
+    .content {
+      display: none;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -2px; top: -2px; right: -2px; bottom: -2px;
+    border: 1px solid;
+    border-color: #C3C3C3 #000000 #000000 #C3C3C3;
+    pointer-events: none;
+  }
+
+  .titlebar {
+    height: 24px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #828282;
+    background-image: linear-gradient(to right, #828282, #C2C2C2);
+    color: white;
+    z-index: 3;
+    padding-right: 4px;
+
+    img {
+      width: 16px;
+      height: 16px;
+      margin: auto;
+      margin-left: 4px;
+    }
+
+    *:nth-child(n+2) {
+      margin-left: 2px !important;
+    }
+
+    h1 {
+      margin: 0;
+      padding: 4px;
+      line-height: 16px;
+      flex: auto;
+      text-align: left;
+      user-select: none;
+      cursor: default;
+    }
+
+    .button {
+      position: relative;
+      cursor: pointer;
+      width: 16px;
+      height: 14px;
+      box-sizing: border-box;
+      margin: auto;
+      border: 1px solid;
+      border-color:  #DFDFDF#828282 #828282 #DFDFDF;
+      background-color: #C3C3C3;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: -2px; top: -2px; right: -2px; bottom: -2px;
+        border: 1px solid;
+        border-color: #FFFFFF #000000 #000000 #FFFFFF;
+        pointer-events: none;
+      }
+
+      &.minimize {
+        background-image: url('/img/gui/minimize.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+      
+      &.expand, &.maximize {
+        background-image: url('/img//gui/expand.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+      
+      &.close {
+        background-image: url('/img//gui/close.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+    }
+    
+  }
+
+  .content {
+    flex: auto;
+    position: relative;
+    z-index: 3;
+    background-color: silver;
+  }
+
+  .ui-resizable-handle {
+    display: block;
+    z-index: 2 !important;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+  }
+
+  .ui-resizable-sw {
+      left: -6px;
+      bottom: -6px;
+  }
+  .ui-resizable-se {
+      right: -6px;
+      bottom: -6px;
+  }
+  .ui-resizable-ne {
+      right: -6px;
+      top: -6px;
+  }
+  .ui-resizable-nw {
+      left: -6px;
+      top: -6px;
+  }
+}

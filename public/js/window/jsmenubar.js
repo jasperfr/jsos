@@ -26,28 +26,30 @@ class JSMenu {
     this.$element = $(`
     <div class="jsmenu">
       <p>${name}</p>
-      <ul class="jsmenu-list"></ul>
+      <div class="jsmenu-list-wrapper">
+        <ul class="jsmenu-list"></ul>
+      </div>
     </div>`);
     return this;
   }
 
   add(text, func, shortcut) {
-    let $menuList = this.$element.find('ul');
+    let $menuList = this.$element.find('.jsmenu-list-wrapper');
+    let $menu = this.$element.find('ul')
     let $li = $(`<li>${text}<span class="shortcut">${shortcut}</span></li>`)
       .click(func)
-      .click(() => $menuList.hide())
-    $menuList.append($li);
+      .click(() => $menuList.slideToggle("fast"));
+    $menu.append($li);
     return this;
   }
 
   start() {
     let $menuButton = this.$element.find('p');
-    let $menuList = this.$element.find('ul');
+    let $menuList = this.$element.find('.jsmenu-list-wrapper');
 
     $menuList.hide();
     $menuButton.on('click', function() {
-      if($menuList.css('display') == 'none') $menuList.fadeIn(150);
-      else $menuList.hide();
+      $menuList.slideToggle("fast");
     });
 
     return this.$element;

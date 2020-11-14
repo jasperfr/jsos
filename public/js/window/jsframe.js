@@ -1,5 +1,5 @@
 class JSFrame {
-  constructor(icon, id) {
+  constructor(icon, id, obj={}) {
     this.icon = icon || "exe";
     this._id = id || Date.now().toString();
     this._type = 'JSFrame'
@@ -8,38 +8,25 @@ class JSFrame {
     this.titleValue = "Form";
     this.widthValue = 100;
     this.heightValue = 100;
-    /* deprecated
+    this.resizable = true;
+
     this.$window = $(`
-      <div class="window" id="${this._id}" style="display: flex; position: absolute;">
+    <div class="window" style="width:${this.widthValue}px;">
         <div class="titlebar">
-          <div class="title">
-            <img src="./img/ico-js.png">
-            <p>${this.titleValue}</p>
-          </div>
-          <nav>
-            <button title="Minimize" class="titlebar-button window-minimize" onclick="$('#${this._id}').remove();">_</button>
-            <button title="Maximize" class="titlebar-button window-maximize" onclick="$('#${this._id}').remove();">O</button>
-            <button title="Close" class="titlebar-button window-close" onclick="$('#${this._id}').remove();">X</button>
-          </nav>
+            <img src="img/types/16/${this.icon}.png">
+            <h1>${this.titleValue}</h1>
+            <p class="button minimize"></p>
+            <p class="button expand"></p>
+            <p class="button close"></p>
         </div>
-        <div class="content" style="position: relative; width: ${this.widthValue}px; height: ${this.heightValue}px">
+        <div class="content" style=" height:${this.heightValue}px; position:relative;">
         </div>
-      </div>  
+    </div>
     `);
-    */
-   this.$window = $(`
-   <div class="window" style="width:${this.widthValue}px;">
-       <div class="titlebar">
-           <img src="img/types/16/${this.icon}.png">
-           <h1>${this.titleValue}</h1>
-           <p class="button minimize"></p>
-           <p class="button expand"></p>
-           <p class="button close"></p>
-       </div>
-       <div class="content" style=" height:${this.heightValue}px; position:relative;">
-       </div>
-   </div>
-   `);
+
+    if(obj.disableMinimize) this.$window.find('.minimize').remove();
+    if(obj.disableExpand) this.$window.find('.expand').remove();
+
     this.taskbar = undefined;
     this.jsmenubar = undefined;
     return this;
@@ -83,15 +70,12 @@ class JSFrame {
     return this;
   }
 
-  setResizable() {
-    this.$window.resizable();
-    this.$window.on('resize', function() {
-      console.log($(this));
-      let $content = $(this).find('.content');
-      $content.css('width', '');
-      $content.css('height', '');
-    });
-    return this;
+  setIcon(iconName) {
+    
+  }
+
+  setResizable(resizable) {
+    this.resizable = resizable;
   }
 
   add(component) {
@@ -115,13 +99,24 @@ class JSFrame {
     return undefined;
   }
 
-  initialize() {
+  initialize(focus = true) {
     let self = this;
     this.taskbar = new JSTaskbarItem(this);
     this.taskbar.start();
     $(function() {
-      $(document.body).append(self.start());
+      let $element = self.start();
+      $(document.body).append($element);
+      if(focus) {
+        $('.window').removeClass('focused');
+        $($element).addClass('focused');
+        $($element).css('z-index', ++$GLOBAL_Z_INDEX);
+        $element.focus();
+      }
     });
+  }
+
+  close() {
+    this.$window.remove();
   }
 
   start() {
@@ -143,12 +138,16 @@ class JSFrame {
     this.$window.draggable({ containment: 'parent', handle: '.titlebar h1', 'stack' : '.window' });
 
     // Add resizable handles.
-    this.$window.resizable({ containment: 'parent', handles: 'nw, ne, sw, se'});
-    
+    if(this.resizable) {
+      this.$window.resizable({ containment: 'parent', handles: 'nw, ne, sw, se'});
+    }
+
     // Configure window focus behavior.
     this.$window.on('mousedown', function() {
         $('.window').removeClass('focused');
         $(this).addClass('focused');
+        $(self.$window).css('z-index', ++$GLOBAL_Z_INDEX);
+        self.$window.focus();
     });
 
     // Configure the minimize button.
@@ -168,6 +167,12 @@ class JSFrame {
     this.$window.find('.expand').click(function() {
         self.$window.removeClass('hidden');
         self.$window.toggleClass('full-screen')
+    });
+
+    // stack windows?
+    this.$window.css({
+      'left': `${$('.window').length * 16}px`,
+      'top': `${$('.window').length * 16}px`,
     });
 
     return this.$window;

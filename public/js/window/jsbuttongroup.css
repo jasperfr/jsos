@@ -1,0 +1,41 @@
+.js-button-group {
+    position: relative;
+}
+
+.js-button-group::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid;
+    border-color: #888 #FFF #FFF #888;
+}
+
+.js-button-group > button {
+    display: inline-flex;
+    position: relative;
+    border-radius: 0;
+    margin-right: 2px;
+    padding: 2px;
+    border: 1px solid;
+    border-color:  white #828282 #828282 white;
+    background-color: #C3C3C3;
+}
+.js-button-group > button::before {
+    content: "";
+    position: absolute;
+    left: -2px; top: -2px; right: -2px; bottom: -2px;
+    border: 1px solid;
+    border-color: #C0C0C0 black black #C0C0C0;
+    pointer-events: none;
+}
+.js-button-group > button:active {
+    border-color:   #828282 white white #828282;
+    background-color: #828282;
+}
+
+.js-button-group > button > p {
+    margin: 0;
+    min-width: 32px;
+}

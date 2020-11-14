@@ -1,19 +1,101 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = 3000;
 const md5 = require('md5');
-const store = require('data-store')({ path: process.cwd() + '/drive.json'});
-const store2 = require('data-store')({ path: process.cwd() + '/drive/C.json' });
+const store = require('data-store')({ path: process.cwd() + '/drive/C.json' });
 
-/* =====================================
- * data-store function hacks
- * provides extra functionality
- * by overwriting the __proto__ object
- */
+const port = 1337;
+
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Max-Age", "1800");
+    res.setHeader("Access-Control-Allow-Headers", "content-type");
+    res.setHeader("Access-Control-Allow-Methods","PUT, POST, GET, DELETE, PATCH, OPTIONS");
+    next();
+});
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+function navigate(path) {
+    if(path.endsWith('/')) path = path.slice(0, -1);
+
+    let tree = path.split('/').reverse();
+    let data = store.data;
+
+    while(tree.length > 0) {
+        let directory = data[tree.pop()];
+        if(!directory) return false;
+        data = directory.content;
+    }
+    return data;
+}
+
+// Get the directory based on path.
+// [{directory item}, {directory item}, {directory item}]
+app.get('/directory', (req, res) => {
+    let path = req.query.path;
+    if(path == undefined) return res.send(403);
+    if(path == '/' || path == '') {
+        return res.status(200).send([{
+            'name': 'My Computer',
+            'type': 'folder',
+            'path': 'My Computer',
+            'icon': 'computer'
+        }]);
+    }
+
+    let data = navigate(path);
+    if(!data) return res.send(404);
+
+    let array = [];
+    for(let obj in data) {
+        array.push({
+            'name': obj,
+            'type': data[obj].type,
+            'path': data[obj].path,
+            'icon': data[obj].icon
+        });
+    }
+
+    return res.status(200).send(array);
+});
+
+// Get the file content based on path.
+app.get('/file', (req, res) => {
+    let path = req.query.path;
+    if(!path) return res.send(403);
+
+    let data = navigate(path);
+    if(!data) return res.send(404);
+
+    res.status(200).send(data);
+});
+
+app.get('/', (req, res) => {
+    res.status(200).send('API OK!');
+});
+
+app.listen(port, () => {
+    console.log('App listening on port ' + port);
+});
+
+/*
 store.__proto__.first = function(lambda) {
     return store.find(lambda)[0];
 }
+
+// middleware
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Max-Age", "1800");
+    res.setHeader("Access-Control-Allow-Headers", "content-type");
+    res.setHeader("Access-Control-Allow-Methods","PUT, POST, GET, DELETE, PATCH, OPTIONS");
+    next();
+});
 
 store.__proto__.find = function(lambda) {
     return Object.keys(store.data)
@@ -21,17 +103,14 @@ store.__proto__.find = function(lambda) {
         .map(key => store.data[key]);
 }
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
 function fail() {
     return res.status(403).send('Invalid.');
 }
 
-/* Drive API settings */
 app.get('/open-directory', (req, res) => {
+
     let pathname = req.query.directoryTree; // C:/Desktop/
     // trim exit /
     if(pathname.endsWith('/')) {
@@ -161,3 +240,4 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log('App listening on port ' + port);
 });
+*/

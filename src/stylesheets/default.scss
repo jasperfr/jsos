@@ -1,0 +1,19 @@
+body {
+    margin: 0; padding: 0;
+    height: 100vh; width: 100vw;
+    background-color: var(--teal);
+    background-image: url('/img/wallpaper.png');
+    background-size: 100%;
+    font-family: Tahoma, Geneva, sans-serif;
+    overflow: hidden;
+}
+
+* {
+    font-weight: 200;
+    font-size: 12px;
+}
+
+button:active,
+button:focus {
+    outline: none;
+}

@@ -11,8 +11,25 @@ class Component {
     return this;
   }
 
+  absolute(left, right, top, bottom) {
+    this.css({
+      position: 'absolute',
+      left: `${left}px`,
+      top: `${top}px`,
+      right: `${right}px`,
+      bottom: `${bottom}px`,
+      margin: '0px',
+      width: `calc(100% + -${left + right}px)`,
+      height: `calc(100% + -${top + bottom}px)`,
+    })
+  }
+
   css(selector, value) {
-    this.$element.css(selector, value);
+    if(typeof selector === 'object') {
+      this.$element.css(selector);
+    } else {
+      this.$element.css(selector, value);
+    }
     return this;
   }
 
@@ -60,5 +77,9 @@ class Component {
 
   start() {
     return this.$element;
+  }
+
+  on(event, listener) {
+    this.$element.on(event, listener);
   }
 }

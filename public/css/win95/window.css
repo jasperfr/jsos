@@ -29,6 +29,7 @@
     display: flex;
     justify-content: space-between;
     background-color: #828282;
+    background-image: linear-gradient(to right, #828282, #C2C2C2);
     color: white;
     z-index: 3;
     padding-right: 4px;
@@ -80,6 +81,7 @@
 }
 .window.window.focused .titlebar {
     background-color: #000082;
+    background-image: linear-gradient(to right, #000082, #0082C2);
 }
 .window.focused .titlebar h1 {
     color: white;
@@ -113,7 +115,7 @@
     background-repeat: no-repeat;
 }
 
-.expand {
+.expand, .maximize {
     background-image: url('/img//gui/expand.png');
     background-position: center center;
     background-repeat: no-repeat;
