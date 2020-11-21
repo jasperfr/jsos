@@ -1,0 +1,53 @@
+.xtree-item {
+    background-color: white;
+    min-width: 128px;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: -64px;
+        top: 0;
+        width: 48px;
+        height: 16px;
+        background-image: url('img/icons/gui/xtree-spacer.png');
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: -16px;
+        top: 0;
+        width: 16px;
+        height: 16px;
+        background-image: url('img/icons/gui/xtree-spacer.png');
+    }
+    
+    > .xtree-item-wrapper {
+        display: flex;
+
+        > .xtree-horizontal-spacer {
+            width: 16px;
+            height: 16px;
+            background-image: url('img/icons/gui/xtree-spacer-right.png');
+        }
+
+        > .xtree-button {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+
+            &.open {
+                background-image: url('img/icons/gui/xtree-button-open.png');
+            }
+
+            &.close {
+                background-image: url('img/icons/gui/xtree-button-close.png');
+            }
+        }
+
+        > .xtree-label {
+            margin-left: 4px;
+        }
+    }
+}

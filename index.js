@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const md5 = require('md5');
-const store = require('data-store')({ path: process.cwd() + '/drive/C.json' });
+const store = require('data-store')({ path: process.cwd() + '/DRIVE.json' });
 
 const port = 1337;
 
@@ -32,6 +32,11 @@ function navigate(path) {
     }
     return data;
 }
+
+app.get('/tree', (req, res) => {
+    let data = store.data;
+    return res.status(200).send(data['My Computer']);
+});
 
 // Get the directory based on path.
 // [{directory item}, {directory item}, {directory item}]
