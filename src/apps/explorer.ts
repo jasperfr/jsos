@@ -2,7 +2,7 @@ $(() => {
   let frame = new XFrame({
     'title': 'Explorer',
     'icon': 'explorer',
-    'size': [320, 240]
+    'size': [640, 480]
   });
 
   let pathLabel = new XLabel("My Computer");
@@ -11,13 +11,24 @@ $(() => {
   let panel = new XPanel();
   frame.add(panel);
 
+  let tree = new XTree();
+  frame.add(tree);
+
+  tree.css({
+    position: 'absolute',
+    'box-sizing': 'border-box',
+    border: '2px inset #C0C0C0',
+    left: '2px', top: '2px', bottom: '0',
+    width: '200px'
+  });
+
   pathLabel.css({
     'border': '1px inset #828282',
     'background-color': 'white',
     'margin': '2px',
     'padding': '2px',
     'position': 'absolute',
-    'left': '0',
+    'left': '202px',
     'right': '0',
     'top': '0',
     'height': '20px',
@@ -34,7 +45,7 @@ $(() => {
     'overflow-y': 'scroll', 
     'box-sizing': 'border-box',
     'position': 'absolute',
-    'left': '0',
+    'left': '204px',
     'right': '0',
     'bottom': '0',
     'top': '24px'
@@ -78,6 +89,23 @@ $(() => {
       panel.refresh();
     });
   };
+
+  function makeSubDir(data, subtree, o) {
+    let isFile = typeof data[o].content !== "object";
+    let subsubtree = subtree.addTree(o, data[o].icon ? data[o].icon : data[o].type, isFile);
+    if(isFile) return;
+    for(let obj in data[o].content) {
+        makeSubDir(data[o].content, subsubtree, obj);
+    }
+  }
+
+  $.get('http://localhost:1337/tree').then(res => {
+      let computer = tree.addTree(res.path, res.icon);
+      console.log(res.content);
+      for(let obj in res.content) {
+          makeSubDir(res.content, computer, obj);
+      }
+  });
 
   getFolder('').then(d => navigate(d[0]));
 
