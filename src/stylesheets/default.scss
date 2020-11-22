@@ -1,7 +1,7 @@
 body {
     margin: 0; padding: 0;
     height: 100vh; width: 100vw;
-    background-color: var(--teal);
+    background-color: #008080;
     background-image: url('/img/wallpaper.png');
     background-size: 100%;
     font-family: Tahoma, Geneva, sans-serif;
@@ -16,4 +16,10 @@ body {
 button:active,
 button:focus {
     outline: none;
+}
+
+.ui-resizable-se {
+    background-image: url('img/gui/resize-handle.png');
+    background-repeat: no-repeat;
+    background-position: 9px 9px;
 }

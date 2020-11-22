@@ -4,8 +4,8 @@ class XFrame {
     height: Number;
     resizable: Boolean;
     icon: string;
-    menubar: Boolean;
-    statusbar: Boolean;
+    menubar: XMenu;
+    statusbar: XStatusBar;
     taskbarButtons: Array<string>;
     $window: any;
     components: Array<XComponent>;
@@ -17,8 +17,6 @@ class XFrame {
       this.height = data.size != undefined ? data.size[1] : 480;
       this.resizable = data.resizable || true;
       this.icon = data.icon || 'exe';
-      this.menubar = data.menubar || true;
-      this.statusbar = data.statusbar || false;
       this.taskbarButtons = data.taskbarButtons  || ['minimize','resize','close'];
       this.$window = undefined;
       this.components = [];
@@ -49,6 +47,14 @@ class XFrame {
   
     add(component) {
       this.components.push(component);
+    }
+
+    setMenubar(menubar: XMenu) {
+      this.menubar = menubar;
+    }
+
+    setStatusbar(statusbar: XStatusBar) {
+      this.statusbar = statusbar;
     }
   
     start() {
@@ -85,6 +91,12 @@ class XFrame {
       this.$window.append($titlebar);
   
       // ----------------------------------------------------------------------------------------------
+      // Create the menu box if a menu exists
+      if(this.menubar) {
+        this.$window.append(this.menubar.start());
+      }
+
+      // ----------------------------------------------------------------------------------------------
       // Create the content box
   
       let $content = $(`<div class="content" style=" height:${this.height}px; position:relative;">`);
@@ -92,6 +104,12 @@ class XFrame {
         $content.append(component.start());
       }
       this.$window.append($content);
+
+      // ----------------------------------------------------------------------------------------------
+      // Create the status bar if it exists
+      if(this.statusbar) {
+        this.$window.append(this.statusbar.start());
+      }
   
       // ----------------------------------------------------------------------------------------------
       // Create the status bar

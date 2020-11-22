@@ -5,6 +5,40 @@ $(() => {
     'size': [640, 480]
   });
 
+  let menu = new XMenu();
+
+  let mbar = new XMenubar();
+  mbar.add(new XMenuItem(XMenuType.TEXT, "File"));
+  mbar.add(new XMenuItem(XMenuType.TEXT, "Edit"));
+  mbar.add(new XMenuItem(XMenuType.TEXT, "View"));
+  mbar.add(new XMenuItem(XMenuType.TEXT, "Go"));
+  mbar.add(new XMenuItem(XMenuType.TEXT, "Favorites"));
+  mbar.add(new XMenuItem(XMenuType.TEXT, "Help"));
+  menu.add(mbar);
+
+  let bbar = new XMenubar();
+  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Back", 'gui/back'));
+  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Forward", 'gui/forward'));
+  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Up", 'gui/up'));
+  bbar.add(new XMenuSpacer());
+  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Cut", 'gui/cut'));
+  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Copy", 'gui/copy'));
+  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Paste", 'gui/paste'));
+  bbar.add(new XMenuSpacer());
+  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Undo", 'gui/undo'));
+  menu.add(bbar);
+
+  frame.setMenubar(menu);
+
+  let status = new XStatusBar();
+  let o = new XStatusBarItem();
+  let l = new XLabel();
+  o.add(l);
+  status.add(o);
+  frame.setStatusbar(status);
+
+  l.text = "20 object(s)";
+
   let pathLabel = new XLabel("My Computer");
   frame.add(pathLabel);
 
@@ -37,7 +71,6 @@ $(() => {
   });
 
   panel.css({
-    'border': '2px inset #C0C0C0',
     'background-color': 'white',
     'display': 'flex',
     'flex-wrap': 'wrap',

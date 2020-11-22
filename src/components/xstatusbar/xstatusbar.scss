@@ -1,0 +1,18 @@
+.xstatusbar {
+    display: flex;
+    width: 100%;
+    justify-content: stretch;
+
+    > .xstatusbaritem {
+        border: 1px solid;
+        border-color: #828282 white white #828282;
+        width:100%;
+        height: 16px;
+        margin: 1px;
+        padding-left: 2px;
+
+        &:nth-child(1n+2) {
+            margin-left: 0;
+        }
+    }
+}

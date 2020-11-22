@@ -1,0 +1,3 @@
+enum XMenuType {
+    TEXT, ICON, LARGE_ICON_TEXT, ICON_TEXT, TEXT_ICON
+}

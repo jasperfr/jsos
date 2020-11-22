@@ -1,0 +1,51 @@
+.xmenu {
+    border: 1px solid;
+    border-color: white #828282 #828282 white;
+    margin: 2px 1px;
+    position: relative;
+
+    &::before {
+        content: "";
+        user-select: none;
+        position: absolute;
+        left: -2px; right: -2px; top: -2px; bottom: -2px;
+        border: 1px solid;
+        border-color:  #828282 white white #828282;
+    }
+
+    > .xmenubar {
+        display: flex;
+        position: relative;
+
+        &:nth-child(1n+2)::before {
+            content:"";
+            position: absolute;
+            left:0;right:0;
+            border-top: 1px solid #828282;
+            border-bottom: 1px solid white;
+        }
+
+        > .xmenu-item {
+            margin: 4px 8px;
+
+            &.large-icon {
+                width: 48px;
+                height: 40px;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+
+                > img {
+                    width: 20px;
+                    height: 20px;
+                    margin: auto;
+                }
+            }
+        }
+
+        > .xmenu-spacer {
+            border-left: 1px solid #828282;
+            border-right: 1px solid white;
+        }
+    }
+}

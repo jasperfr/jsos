@@ -1,6 +1,7 @@
 div.xframe {
   position: absolute !important;
   border: 1px solid;
+  padding: 1px;
   border-color:  #FFFFFF#828282 #828282 #FFFFFF;
   background-color: #C3C3C3;
   box-sizing: border-box;
@@ -51,7 +52,7 @@ div.xframe {
   }
 
   .titlebar {
-    height: 24px;
+    height: 18px;
     display: flex;
     justify-content: space-between;
     background-color: #828282;
@@ -74,7 +75,8 @@ div.xframe {
     h1 {
       margin: 0;
       padding: 4px;
-      line-height: 16px;
+      line-height: 10px;
+      font-size: 90%;
       flex: auto;
       text-align: left;
       user-select: none;
@@ -84,13 +86,17 @@ div.xframe {
     .button {
       position: relative;
       cursor: pointer;
-      width: 16px;
-      height: 14px;
+      width: 14px;
+      height: 12px;
       box-sizing: border-box;
       margin: auto;
       border: 1px solid;
       border-color:  #DFDFDF#828282 #828282 #DFDFDF;
       background-color: #C3C3C3;
+
+      &.close {
+        margin-left: 4px !important;
+      }
 
       &::before {
         content: "";

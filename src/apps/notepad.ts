@@ -5,5 +5,5 @@ $(() => {
         'size': [320, 240]
     });
 
-    notepad.start();
+    // notepad.start();
 });
