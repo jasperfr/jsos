@@ -1,0 +1,43 @@
+div.x-contextmenu {
+    position: absolute;
+    z-index: 999999999;
+    border: 1px solid;
+    border-color: #c2c2c2 black black #c2c2c2;
+    & > ul {
+        min-width: 120px;
+        border: 1px solid ;
+        border-color: white #828282 #828282 white;
+        background-color: #C0C0C0;
+        color: black;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        > li {
+            margin: 2px 0;
+            padding: 2px 16px;
+
+            &:hover {
+                color: white;
+                background-color: #000080;
+                cursor: pointer;
+            }
+        }
+
+        > li.spacer {
+            margin: 0 1px;
+            padding: 0;
+            border-top: 1px solid #828282;
+            border-bottom: 1px solid white;
+        }
+
+        > li.disabled {
+            color: #828282;
+            text-shadow: 1px 1px white;
+
+            &:hover {
+                background-color: #828282;
+            }
+        }
+    }
+}

@@ -1,32 +1,52 @@
 $(() => {
+  return 0;
+
   let frame = new XFrame({
     'title': 'Explorer',
     'icon': 'explorer',
     'size': [640, 480]
   });
 
+  const xt: XMenuType = XMenuType.TEXT;
+  
   let menu = new XMenu();
 
-  let mbar = new XMenubar();
-  mbar.add(new XMenuItem(XMenuType.TEXT, "File"));
-  mbar.add(new XMenuItem(XMenuType.TEXT, "Edit"));
-  mbar.add(new XMenuItem(XMenuType.TEXT, "View"));
-  mbar.add(new XMenuItem(XMenuType.TEXT, "Go"));
-  mbar.add(new XMenuItem(XMenuType.TEXT, "Favorites"));
-  mbar.add(new XMenuItem(XMenuType.TEXT, "Help"));
-  menu.add(mbar);
+  menu.add(new XMenubar()
+    .add(new XMenuItem(xt, "File"))
+    .add(new XMenuItem(xt, "Edit"))
+    .add(new XMenuItem(xt, "View"))
+    .add(new XMenuItem(xt, "Go"))
+    .add(new XMenuItem(xt, "Favorites"))
+    .add(new XMenuItem(xt, "Help"))
+  );
 
-  let bbar = new XMenubar();
-  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Back", 'gui/back'));
-  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Forward", 'gui/forward'));
-  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Up", 'gui/up'));
-  bbar.add(new XMenuSpacer());
-  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Cut", 'gui/cut'));
-  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Copy", 'gui/copy'));
-  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Paste", 'gui/paste'));
-  bbar.add(new XMenuSpacer());
-  bbar.add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Undo", 'gui/undo'));
-  menu.add(bbar);
+  menu.add(
+    new XMenubar()
+      .add(
+        new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Back", 'gui/back')
+          .on('click', function() {
+            console.log('Hello, world!');
+          })
+        )
+      .add(
+        new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Forward", 'gui/forward')
+          .on('click', function() {
+            console.log('Forward!');
+          })
+        )
+      .add(
+        new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Up", 'gui/up')
+          .on('click', function() {
+            console.log('Up!');
+          })
+        )
+      .add(new XMenuSpacer())
+      .add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Cut", 'gui/cut'))
+      .add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Copy", 'gui/copy'))
+      .add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Paste", 'gui/paste'))
+      .add(new XMenuSpacer())
+      .add(new XMenuItem(XMenuType.LARGE_ICON_TEXT, "Undo", 'gui/undo'))
+    )
 
   frame.setMenubar(menu);
 

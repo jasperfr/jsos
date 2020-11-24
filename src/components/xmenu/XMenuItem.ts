@@ -23,5 +23,7 @@ class XMenuItem extends XComponent {
                 this.$element.append($(`<span>${label}</span>`));
                 break;
         }
+
+        return this;
     }
 }

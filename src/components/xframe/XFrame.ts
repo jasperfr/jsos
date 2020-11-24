@@ -9,6 +9,7 @@ class XFrame {
     taskbarButtons: Array<string>;
     $window: any;
     components: Array<XComponent>;
+    state: Record<string, any> = {}
 
     constructor(data: any) {
       if(!data) data = {};
@@ -31,6 +32,14 @@ class XFrame {
         this.$window.find('.titlebar h1').text(this.title);
       }
     }
+
+    getState(key) {
+      return this.state[key] || undefined;
+    }
+
+    setState(key, val) {
+      this.state[key] = val;
+    }
   
     hide() {
       this.$window.hide();
@@ -45,16 +54,19 @@ class XFrame {
       this.$window.remove();
     }
   
-    add(component) {
+    add(component): XFrame {
       this.components.push(component);
+      return this;
     }
 
-    setMenubar(menubar: XMenu) {
+    setMenubar(menubar: XMenu): XFrame {
       this.menubar = menubar;
+      return this;
     }
 
-    setStatusbar(statusbar: XStatusBar) {
+    setStatusbar(statusbar: XStatusBar): XFrame {
       this.statusbar = statusbar;
+      return this;
     }
   
     start() {

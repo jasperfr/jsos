@@ -33,9 +33,57 @@ function navigate(path) {
     return data;
 }
 
+
 app.get('/tree', (req, res) => {
     let data = store.data;
     return res.status(200).send(data['My Computer']);
+});
+
+app.post('/touch', (req, res) => {
+    let path = req.query.path;
+    let type = req.query.type;
+    if(path == undefined || type == undefined) return res.send(403);
+    if(path.endsWith('/')) path = path.slice(0, -1);
+    let data = navigate(path);
+    if(!data) return res.send(404);
+
+    let i = 0;
+    while(1) {
+        let filename = `Untitled${i != 0 ? ' ('+i+')':''}.${type}`;
+        if(!Object.keys(data).includes(filename)) {
+            data[filename] = {
+                type: type,
+                path: `${path}/${filename}`,
+                content: ""
+            }
+            store.save();
+            return res.sendStatus(200);
+        }
+        i++;
+    }
+})
+
+app.post('/makedir', (req, res) => {
+    let path = req.query.path;
+    if(path == undefined) return res.send(403);
+    if(path.endsWith('/')) path = path.slice(0, -1);
+    let data = navigate(path);
+    if(!data) return res.send(404);
+
+    let i = 0;
+    while(1) {
+        let foldername = `New Folder${i != 0 ? ' ('+i+')':''}`;
+        if(!Object.keys(data).includes(foldername)) {
+            data[foldername] = {
+                type: 'folder',
+                path: `${path}/${foldername}`,
+                content: {}
+            }
+            store.save();
+            return res.sendStatus(200);
+        }
+        i++;
+    }
 });
 
 // Get the directory based on path.

@@ -6,27 +6,32 @@ abstract class XComponent {
     this.$element = element;
   }
 
-  css(data: object): void {
+  css(data: object): XComponent {
     this.$element.css(data);
+    return this;
   }
 
-  on(event: string, func: Function): void {
-    this.$element.on(event, func);
+  on(event: string, func: Function): XComponent {
+    this.$element.on(event, (e) => func(e));
+    return this;
   }
 
-  add(component): void {
+  add(component): XComponent {
     this.components.push(component);
+    return this;
   }
 
-  clear(): void {
+  clear(): XComponent {
     this.components = [];
+    return this;
   }
 
-  refresh(): void {
+  refresh(): XComponent {
     this.$element.empty();
     for(let component of this.components) {
       this.$element.append(component.start());
     }
+    return this;
   }
 
   start(): any {
