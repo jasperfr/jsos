@@ -1,3 +1,7 @@
+async function openFile(path: string) {
+    return $.get(`http://localhost:1337/file?path=${path}`);
+}
+
 async function newFile(path: string, type: string) {
     return $.post(`http://localhost:1337/touch?path=${path}&type=${type}`);
 }

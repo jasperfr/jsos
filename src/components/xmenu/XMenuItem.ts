@@ -26,4 +26,8 @@ class XMenuItem extends XComponent {
 
         return this;
     }
+
+    submenu(obj: any) {
+        
+    }
 }

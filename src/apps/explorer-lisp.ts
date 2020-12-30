@@ -87,8 +87,9 @@ $(() => {
   panel.on('contextmenu', (e) => panelMenu(e));
 
   function panelMenu(e) {
+    console.log('A');
     e.preventDefault();
-    let el = XContextMenu.create(e, [
+    XContextMenu.create(e, [
       { label: "Arrange Icons", icon: 'folder', 'click': function() { console.log('a'); } },
       { label: "Line Up Icons", icon: 'folder', 'click': function() { console.log('a'); } },
       "SPACER",
@@ -116,12 +117,8 @@ $(() => {
         }
       },
       "SPACER",
-      { label: "Properties", icon: 'folder', 'click': function() { console.log('a'); } },
+      { label: "Properties", icon: 'folder', 'click': function() { console.log('a'); } }
     ]);
-    if(!!el) {
-      $(document.body).append(el);
-      el.slideToggle('fast');
-    }
   }
 
   function newFolder(path: string) {
