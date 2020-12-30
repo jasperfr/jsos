@@ -4,7 +4,7 @@ type ContextMenuItems = Record<string, Function>
 
 const XContextMenu = (function() {
 
-    var $element, create, mouseInside, initialize;
+    var $element, create, mouseInside, initialize, close;
 
     initialize = function() {
         $(document.body).on('mouseup', () => {
@@ -16,17 +16,20 @@ const XContextMenu = (function() {
     }
 
     create = function(e: MouseEvent, data: ContextMenuItems) {
+        let self = this;
         if($element !== undefined) return false;
         if(!$element) $element = $('<div class="x-contextmenu">').contextmenu(e => e.preventDefault())
         $element.hide();
-        $element.on('hover', () => mouseInside = true, () => mouseInside = false);
 
         let $list = $('<ul>');
         data.forEach(obj => {
             switch(typeof obj) {
                 case "object":
                 let $el = $(`<li class="x-contextmenuitem ${obj.disabled?'disabled':''}">${obj.label}</li>`);
-                $el.on('click', obj.click);
+                $el.on('click', function() {
+                    obj.click();
+                    self.close();
+                });
                 $list.append($el);
                 break;
                 case "string":
@@ -38,11 +41,29 @@ const XContextMenu = (function() {
         $element.css('left', `${e.clientX}px`);
         $element.css('top', `${e.clientY}px`);
         $element.append($list);
-        return $element;
+
+        $(document.body).append($element);
+        $element.slideToggle('fast');
+        $element.on({
+            mouseenter: function () {
+                console.log(mouseInside);
+                mouseInside = true;
+            },
+            mouseleave: function() {
+                console.log(mouseInside);
+                mouseInside = false;
+            }
+        });
+    }
+
+    close = function() {
+        $element.remove();
+        $element = undefined;
     }
 
     return {
         create: create,
+        close: close,
         initialize: initialize
     }
     

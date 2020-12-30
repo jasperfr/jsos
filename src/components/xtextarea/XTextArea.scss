@@ -1,0 +1,9 @@
+.x-textarea {
+    border: none;
+    resize: none;
+    outline: none;
+
+    &:active, &:hover {
+        outline: none;
+    }
+}

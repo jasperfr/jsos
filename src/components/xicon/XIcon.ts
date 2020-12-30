@@ -9,10 +9,27 @@ class XIcon extends XComponent {
             <span>${file.name}</span>
         </div>`));
 
+        this.file = file;
+        let self = this;
+
         this.$element.on('contextmenu', function(e) {
-            console.log('oof')
+            console.log('B');
             e.preventDefault();
-            let el = XContextMenu.create(e, [
+            e.stopPropagation();
+            let arr: Array<any> = [];
+            switch(self.file.type) {
+                case "js":
+                    arr.push({ label: "Run", icon: "folder", "click": function() {
+                        alert('try to run this file.')
+                    }})
+                case "txt":
+                    arr.push({ label: "Edit", icon: "folder", "click": function() {
+                        alert('try to edit this file.')
+                    }})
+                    arr.push("SPACER");
+                    break;
+            }
+            arr = arr.concat([
                 { label: "Cut", icon: 'folder', 'click': function() { console.log('a'); } },
                 { label: "Copy", icon: 'folder', 'click': function() { console.log('a'); } },
                 { label: "Delete", icon: 'folder', 'click': function() { console.log('a'); } },
@@ -21,8 +38,8 @@ class XIcon extends XComponent {
                 "SPACER",
                 { label: "Properties", icon: 'folder', 'click': function() { console.log('a'); } },
             ]);
-            $(document.body).append(el);
-            el.slideToggle('fast');
+
+            XContextMenu.create(e, arr);
           });
     }
 }

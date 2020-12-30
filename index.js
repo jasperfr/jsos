@@ -122,7 +122,7 @@ app.get('/file', (req, res) => {
     if(!path) return res.send(403);
 
     let data = navigate(path);
-    if(!data) return res.send(404);
+    if(!data && data !== "") return res.send(404);
 
     res.status(200).send(data);
 });

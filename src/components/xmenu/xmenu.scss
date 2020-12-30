@@ -1,3 +1,13 @@
+.xmenubar {
+    display: flex;
+    position: relative;
+
+    > .xmenu-item {
+        padding: 4px 8px;
+        cursor: pointer;
+    }
+}
+
 .xmenu {
     border: 1px solid;
     border-color: white #828282 #828282 white;
